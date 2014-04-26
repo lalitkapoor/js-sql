@@ -1,4 +1,6 @@
 js-sql
 ======
 
-Write SQL directly in your javascript files
+Write SQL in your JavaScript
+
+**Under development**
