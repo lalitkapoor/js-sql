@@ -1,0 +1,24 @@
+{
+  "name": "js-sql",
+  "version": "0.0.0",
+  "description": "Write SQL directly in your JavaScript",
+  "main": "index.js",
+  "dependencies": {
+    "esprima-fb": "~3001.1.0-dev-harmony-fb",
+    "jstransform": "~4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lalitkapoor/js-sql.git"
+  },
+  "author": "Lalit Kapoor <lalitkapoor@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lalitkapoor/js-sql/issues"
+  },
+  "homepage": "https://github.com/lalitkapoor/js-sql"
+}
