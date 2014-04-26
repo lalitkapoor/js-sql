@@ -58,6 +58,12 @@ function test7(name) {
   return x;
 };
 
+function test8(name) {
+  var x = <sql>SELECT * FROM user, session WHERE id = $1 AND name = '{name}'</sql>;
+
+  return x;
+};
+
 console.log(test1("Brian"));
 console.log(test2("user", "Brian"));
 console.log(test3("user", "Brian"));
@@ -65,3 +71,4 @@ console.log(test4("user", "Brian"));
 console.log(test5("user", "Brian"));
 console.log(test6("user", "Brian"));
 console.log(test7("user"));
+console.log(test8("user"));
