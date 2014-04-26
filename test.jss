@@ -82,6 +82,19 @@ function test10(name) {
   return x;
 };
 
+function test11(name) {
+  var x = <sql>
+    SELECT $1 FROM user
+    WHERE id = {getId()} AND name = '{name}'
+  </sql>;
+
+  return x;
+};
+
+function getId() {
+  return 4;
+}
+
 console.log(test1("Brian"));
 console.log(test2("user", "Brian"));
 console.log(test3("user", "Brian"));
@@ -92,3 +105,4 @@ console.log(test7("Brian"));
 console.log(test8("Brian"));
 console.log(test9("Brian"));
 console.log(test10("Brian"));
+console.log(test11("Brian"));
