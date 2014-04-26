@@ -6,14 +6,14 @@ Write SQL in your JavaScript
 **Under development**
 
 ```javascript
-function car() {
+function foo(table) {
   var x = <sql>
-    SELECT * FROM user
+    SELECT * FROM {table}
     WHERE name = $1 AND id = $2
   </sql>;
 
   return x;
 };
 
-console.log(car()); // SELECT * FROM user WHERE name = $1 AND id = $2
+console.log(foo("user")); // SELECT * FROM user WHERE name = $1 AND id = $2
 ```
