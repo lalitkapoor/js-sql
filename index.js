@@ -85,7 +85,8 @@ function visitSQLElement(traverse, node, path, state) {
 }
 
 visitSQLElement.test = function(node, path, state) {
-  return node.type === Syntax.XJSElement
+  return (node.type === Syntax.XJSElement
+    && node.openingElement.name.name.toLowerCase() === 'sql')
 }
 
 var originalFileContents = fs.readFileSync("./test.jss").toString()
