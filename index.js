@@ -71,13 +71,17 @@ function renderXJSLiteral(node, isFirst, isLast, state, start, end) {
 
 function renderXJSExpressionContainer(traverse, node, isLast, path, state) {
   // Plus 1 to skip `{`.
+  utils.append("(", state);
   utils.move(node.range[0] + 1, state)
   traverse(node.expression, path, state)
 
   if (!isLast && node.expression.type !== Syntax.XJSEmptyExpression) {
     // If we need to append a comma, make sure to do so after the expression.
     utils.catchup(node.expression.range[1], state, trimLeft)
+    utils.append(")", state);
     utils.append(' + ', state)
+  } else {
+    utils.append(")", state);
   }
 
   // Minus 1 to skip `}`.

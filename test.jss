@@ -64,11 +64,31 @@ function test8(name) {
   return x;
 };
 
+function test9(name) {
+  var x = <sql>
+    SELECT $1 FROM user
+    WHERE id = {5+3} AND name = '{name}'
+  </sql>;
+
+  return x;
+};
+
+function test10(name) {
+  var x = <sql>
+    SELECT $1 FROM user
+    WHERE id = {"5"+"3"} AND name = '{name}'
+  </sql>;
+
+  return x;
+};
+
 console.log(test1("Brian"));
 console.log(test2("user", "Brian"));
 console.log(test3("user", "Brian"));
 console.log(test4("user", "Brian"));
 console.log(test5("user", "Brian"));
 console.log(test6("user", "Brian"));
-console.log(test7("user"));
-console.log(test8("user"));
+console.log(test7("Brian"));
+console.log(test8("Brian"));
+console.log(test9("Brian"));
+console.log(test10("Brian"));
