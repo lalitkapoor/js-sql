@@ -39,13 +39,8 @@ function renderXJSLiteral(object, isLast, state, start, end) {
     if (trimmedLine || isLastNonEmptyLine) {
       utils.append(
         JSON.stringify(trimmedLine) +
-        (!isLastNonEmptyLine ? " +" : ''),
+        (!isLastNonEmptyLine ? " + ' ' +" : ''),
         state)
-
-      if (isLastNonEmptyLine) {
-        if (end) utils.append(end, state)
-        if (!isLast) utils.append(', ', state)
-      }
 
       // only restore tail whitespace if line had literals
       if (trimmedLine && !isLastLine) utils.append(line.match(/[ \t]*$/)[0], state)
@@ -88,6 +83,7 @@ function visitSQLElement(traverse, node, path, state) {
   // get to the end
   utils.catchup(node.range[1], state)
 }
+
 visitSQLElement.test = function(node, path, state) {
   return node.type === Syntax.XJSElement
 }
@@ -96,4 +92,4 @@ var originalFileContents = fs.readFileSync("./test.jss").toString()
 
 var transformedFileData = jstransform.transform([visitSQLElement], originalFileContents)
 
-console.log(transformedFileData.code)
+fs.writeFileSync("./build/test.js", transformedFileData.code);
