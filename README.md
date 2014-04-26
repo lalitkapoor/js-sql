@@ -9,11 +9,15 @@ Write SQL in your JavaScript
 function foo(table) {
   var x = <sql>
     SELECT * FROM {table}
-    WHERE name = $1 AND id = $2
+    WHERE name = $1 AND id = {getId()}
   </sql>;
 
   return x;
 };
 
-console.log(foo("user")); // SELECT * FROM user WHERE name = $1 AND id = $2
+function getId() {
+  return 4;
+}
+
+console.log(foo("user")); // SELECT * FROM user WHERE name = $1 AND id = 4
 ```
