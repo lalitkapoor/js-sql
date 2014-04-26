@@ -7,9 +7,17 @@ function trimLeft(value) {
   return value.replace(/^[ ]+/, '')
 }
 
-// this bit from reactjs
-function renderXJSLiteral(node, isLast, state, start, end) {
+// modified from reactjs for multi-line string concat
+function renderXJSLiteral(node, isFirst, isLast, state, start, end) {
   var lines = node.value.split(/\r\n|\n|\r/)
+  var startWithSpace = false
+  if (
+    !isFirst && (
+      node.value.indexOf("\n") == 0
+    || node.value.indexOf("\r\n") == 0
+    || node.value.indexOf("\r") == 0
+    )
+  ) startWithSpace = true
 
   if (start) {
     utils.append(start, state)
@@ -18,22 +26,18 @@ function renderXJSLiteral(node, isLast, state, start, end) {
   var firstNonEmptyLine = 0
   var lastNonEmptyLine = 0
 
-  // console.log(lines);
-
   lines.forEach(function (line, index) {
-    console.log("line " +index +":", line)
-    console.log("plus", (firstNonEmptyLine + 1))
-    if (line.trim() !== "" && !firstNonEmptyLine) firstNonEmptyLine = index
     if (line.match(/[^ \t]/)) lastNonEmptyLine = index
+    if (line.trim() === "" && index === firstNonEmptyLine) firstNonEmptyLine = index + 1
   })
 
-  console.log("non-empty:", firstNonEmptyLine, lines[firstNonEmptyLine]);
-
-  // console.log(firstNonEmptyLine, lines[firstNonEmptyLine]);
   lines.forEach(function (line, index) {
     var isFirstLine = index === 0
     var isLastLine = index === lines.length - 1
     var isLastNonEmptyLine = index === lastNonEmptyLine
+
+    // if it's the first literal and it's multi-line start with a space
+    if (isFirst && index > firstNonEmptyLine) startWithSpace = true
 
     // replace rendered whitespace tabs with spaces
     var trimmedLine = line.replace(/\t/g, ' ')
@@ -45,8 +49,9 @@ function renderXJSLiteral(node, isLast, state, start, end) {
 
     if (trimmedLine || isLastNonEmptyLine) {
       utils.append(
+        (startWithSpace ? "' ' + " : '') +
         JSON.stringify(trimmedLine) +
-        (!isLastNonEmptyLine ? " + ' ' +" : ''),
+        (!isLastNonEmptyLine ? " +" : ''),
         state
       )
       if (isLastNonEmptyLine) {
@@ -106,18 +111,20 @@ function visitSQLElement(traverse, node, path, state) {
       // utils.append(' + ', state)
     // }
 
+    var isFirstLiteral = true
     childrenToRender.forEach(function(child, index) {
       utils.catchup(child.range[0], state, trimLeft)
 
       var isLast = index >= lastRenderableIndex
 
       if (child.type === Syntax.Literal) {
-        renderXJSLiteral(child, isLast, state)
+        renderXJSLiteral(child, isFirstLiteral, isLast, state)
+        isFirstLiteral = false
       } else if (child.type === Syntax.XJSExpressionContainer) {
         renderXJSExpressionContainer(traverse, child, isLast, path, state)
       } else {
         traverse(child, path, state)
-        // if (!isLast) utils.append(' + ', state)
+        if (!isLast) utils.append(' + ', state)
       }
     })
   }
