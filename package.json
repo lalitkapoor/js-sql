@@ -2,6 +2,14 @@
   "name": "js-sql",
   "version": "0.0.1",
   "description": "Write SQL directly in your JavaScript",
+  "keywords": [
+    "sql",
+    "jss",
+    "js-sql",
+    "esprima",
+    "jstransform",
+    "transpiler"
+  ],
   "main": "index.js",
   "bin": {
     "jss": "./bin/jss"
