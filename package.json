@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "description": "Write SQL directly in your JavaScript",
   "main": "index.js",
+  "bin": {
+    "jss": "./bin/jss"
+  },
   "dependencies": {
     "esprima-fb": "~3001.1.0-dev-harmony-fb",
-    "jstransform": "~4.0.0"
+    "jstransform": "~4.0.0",
+    "commoner": "~0.9.3"
   },
   "devDependencies": {},
   "scripts": {
