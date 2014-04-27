@@ -23,7 +23,7 @@ function getId() {
 console.log(foo("user")); // SELECT * FROM user WHERE name = $1 AND id = 4
 ```
 
-### jss command usage
+### JSS command usage
 
 ```
 Usage: jss [options] <source directory> <output directory> [<module ID> [<module ID> ...]]
@@ -44,7 +44,7 @@ Options:
   --harmony                                Turns on JS transformations such as ES6 Classes etc.
 ```
 
-### Example usage
+### Transpiling example
 
 ```bash
 jss -x jss src/ build/ # this will transpile all .jss files in the src directory into the build directory
