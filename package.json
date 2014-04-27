@@ -1,6 +1,6 @@
 {
   "name": "js-sql",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Write SQL directly in your JavaScript",
   "keywords": [
     "sql",
