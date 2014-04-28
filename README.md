@@ -5,7 +5,7 @@ Write SQL in your JavaScript
 
 **Under development**
 
-### Examples
+## Examples
 
 ```javascript
 function foo(table) {
@@ -80,7 +80,7 @@ var sql = <sql>
 // SELECT * FROM users WHERE email = 'test@test.test'
 ```
 
-### JSS command usage
+## JSS command usage
 
 ```
 Usage: jss [options] <source directory> <output directory> [<module ID> [<module ID> ...]]
@@ -101,11 +101,13 @@ Options:
   --harmony                                Turns on JS transformations such as ES6 Classes etc.
 ```
 
-### Transpiling example
+## Transpiling example
 
 ```bash
 jss -x jss src/ build/ # this will transpile all .jss files in the src directory into the build directory
 ```
+
+## Plugins
 
 **vim plugin support is here:** [vim-js-sql](https://github.com/lalitkapoor/vim-js-sql)
 
