@@ -5,7 +5,8 @@ Write SQL in your JavaScript
 
 **Under development**
 
-### Example
+### Examples
+
 ```javascript
 function foo(table) {
   var x = <sql>
@@ -21,6 +22,62 @@ function getId() {
 }
 
 console.log(foo("user")); // SELECT * FROM user WHERE name = $1 AND id = 4
+```
+
+**A few simple examples**
+
+```javascript
+var sql = <sql>SELECT * FROM users WHERE id = $1</sql>
+// SELECT * FROM users WHERE id = $1
+```
+
+```javascript
+// multi-line support
+var sql = <sql>
+  SELECT * FROM users
+  WHERE id = $1
+</sql>
+// SELECT * FROM users WHERE id = $1
+```
+
+**Examples of JavaScript in your SQL**
+
+```javascript
+var sql = <sql>
+  SELECT * FROM users
+  WHERE id = {3+4}
+</sql>
+// SELECT * FROM users WHERE id = 7
+```
+
+```javascript
+var email = 'test@test.test'
+var sql = <sql>
+  SELECT * FROM users
+  WHERE email = '{email}'
+</sql>
+// SELECT * FROM users WHERE email = 'test@test.test'
+```
+
+```javascript
+var email = 'test@test.test'
+var sql = <sql>
+  SELECT * FROM users
+  WHERE email = '{"pre-"+email}'
+</sql>
+// SELECT * FROM users WHERE email = 'pre-test@test.test'
+```
+
+```javascript
+var getEmail = function() {
+  return "test@test.test"
+}
+
+var sql = <sql>
+  SELECT * FROM users
+  WHERE email = '{getEmail()}'
+</sql>
+// SELECT * FROM users WHERE email = 'test@test.test'
 ```
 
 ### JSS command usage
