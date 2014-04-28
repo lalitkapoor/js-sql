@@ -5,7 +5,7 @@ Write SQL in your JavaScript
 
 **Under development**
 
-### Example .jss file
+### Example
 ```javascript
 function foo(table) {
   var x = <sql>
