@@ -40,7 +40,7 @@ var sql = <sql>
 // SELECT * FROM users WHERE id = $1
 ```
 
-**Examples of JavaScript in your SQL**
+**Examples of JavaScript in your SQL (use where appropriate, really you should stick to parameterizing)**
 
 ```javascript
 var sql = <sql>
