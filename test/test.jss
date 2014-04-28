@@ -1,108 +1,66 @@
-function test1(name) {
-  var x = <sql>
-    SELECT * FROM user
-    WHERE id = $1 AND name = '{name}'
-  </sql>;
+var assert = require ('assert')
 
-  return x;
-};
+describe('sql', function() {
+  describe('inline', function() {
+    it('should set the variable to the contents between the tags', function(){
+      var sql = <sql>SELECT * FROM users WHERE id = $1</sql>
+      assert(sql === "SELECT * FROM users WHERE id = $1")
+    })
+  })
 
-function test2(table, name) {
-  var x = <sql>
-    SELECT * FROM {table}
-    WHERE id = $1 AND name = '{name}'
-  </sql>;
+  describe('multi-line', function() {
+    it('should concat multi-line sql', function(){
+      var sql = <sql>
+        SELECT * FROM users
+        WHERE id = $1
+      </sql>
+      assert(sql === "SELECT * FROM users WHERE id = $1")
+    })
+  })
 
-  return x;
-};
+  describe('with js - addition', function() {
+    it('should perform addition and build sql string', function() {
+      var sql = <sql>
+        SELECT * FROM users
+        WHERE id = {3+4}
+      </sql>
+      assert(sql === "SELECT * FROM users WHERE id = 7")
+    })
+  })
 
-function test3(table, name) {
-  var x = <sql>
-    {table} SELECT * FROM {table}
-    WHERE id = $1 AND name = '{name}'
-  </sql>;
+  describe('with js - substitution', function() {
+    it('should substitute {email} with test@test.test', function() {
+      var email = 'test@test.test'
+      var sql = <sql>
+        SELECT * FROM users
+        WHERE email = '{email}'
+      </sql>
+      assert(sql === "SELECT * FROM users WHERE email = 'test@test.test'")
+    })
+  })
 
-  return x;
-};
+  describe('with js - string concat', function() {
+    it('should substitute {"pre-"+email} with pre-test@test.test', function() {
+      var email = 'test@test.test'
+      var sql = <sql>
+        SELECT * FROM users
+        WHERE email = '{"pre-"+email}'
+      </sql>
+      assert(sql === "SELECT * FROM users WHERE email = 'pre-test@test.test'")
+    })
+  })
 
-function test4(table, name) {
-  var x = <sql>{table} SELECT * FROM {table}
-    WHERE id = $1 AND name = '{name}'
-  </sql>;
+  describe('with js - function call', function() {
+    it('should substitute {getEmail()} with test@test.test', function() {
+      var getEmail = function() {
+        return "test@test.test"
+      }
 
-  return x;
-};
-
-function test5(table, name) {
-  var x = <sql>{table} SELECT * FROM {table}
-    WHERE id = $1 AND name = '{name}'</sql>;
-
-  return x;
-};
-
-function test6(table, name) {
-  var x = <sql>SELECT * FROM {table}
-    WHERE id = $1 AND name = '{name}'</sql>;
-
-  return x;
-};
-
-function test7(name) {
-  var x = <sql>
-    SELECT * FROM
-    user,
-    session
-    WHERE id = $1 AND name = '{name}'
-  </sql>;
-
-  return x;
-};
-
-function test8(name) {
-  var x = <sql>SELECT * FROM user, session WHERE id = $1 AND name = '{name}'</sql>;
-
-  return x;
-};
-
-function test9(name) {
-  var x = <sql>
-    SELECT $1 FROM user
-    WHERE id = {5+3} AND name = '{name}'
-  </sql>;
-
-  return x;
-};
-
-function test10(name) {
-  var x = <sql>
-    SELECT $1 FROM user
-    WHERE id = {"5"+"3"} AND name = '{name}'
-  </sql>;
-
-  return x;
-};
-
-function test11(name) {
-  var x = <sql>
-    SELECT $1 FROM user
-    WHERE id = {getId()} AND name = '{name}'
-  </sql>;
-
-  return x;
-};
-
-function getId() {
-  return 4;
-}
-
-console.log(test1("Brian"));
-console.log(test2("user", "Brian"));
-console.log(test3("user", "Brian"));
-console.log(test4("user", "Brian"));
-console.log(test5("user", "Brian"));
-console.log(test6("user", "Brian"));
-console.log(test7("Brian"));
-console.log(test8("Brian"));
-console.log(test9("Brian"));
-console.log(test10("Brian"));
-console.log(test11("Brian"));
+      var sql = <sql>
+        SELECT * FROM users
+        WHERE email = '{getEmail()}'
+      </sql>
+      assert(sql === "SELECT * FROM users WHERE email = 'test@test.test'")
+    })
+  })
+})

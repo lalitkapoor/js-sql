@@ -20,9 +20,12 @@
     "jstransform": "~4.0.0",
     "commoner": "~0.9.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "should": "~3.3.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
