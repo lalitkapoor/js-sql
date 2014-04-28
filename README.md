@@ -1,4 +1,4 @@
-js-sql
+js-sql [![Build Status](https://travis-ci.org/lalitkapoor/js-sql.png?branch=master)](https://travis-ci.org/lalitkapoor/js-sql)
 ======
 
 Write SQL in your JavaScript
